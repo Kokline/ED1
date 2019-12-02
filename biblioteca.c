@@ -32,8 +32,8 @@ void menu(){
 			printf("\nPrograma finalizado com sucesso.");
 			break;
 		case 'A':
-			printf("\n1 – Efetuar inclusao de cliente."
-					"\n2 – Efetuar inclusao de dependente."
+			printf("\n1 â€“ Efetuar inclusao de cliente."
+					"\n2 â€“ Efetuar inclusao de dependente."
 					"\n3 - Finalizar."
 					"\nDigite sua opcao: ");
 			fflush(stdin);
@@ -49,8 +49,8 @@ void menu(){
 			}			
 			break;
 		case 'B':
-			printf("\n1 – Efetuar exclusão de cliente."
-					"\n2 – Efetuar exclusão de dependente."
+			printf("\n1 â€“ Efetuar exclusÃ£o de cliente."
+					"\n2 â€“ Efetuar exclusÃ£o de dependente."
 					"\n3 - Finalizar."
 					"\nDigite sua opcao: ");
 			fflush(stdin);
@@ -58,10 +58,10 @@ void menu(){
 			if (opcao == 1){
 					
 			} else if (opcao == 2){
-			printf("\nRemover pelo código indicado.");
+			printf("\nRemover pelo cÃ³digo indicado.");
 			int codigo = -1;
 			while (codigo < 0) {
-				printf("\nDigite o código a ser excluído: ");
+				printf("\nDigite o cÃ³digo a ser excluÃ­do: ");
 				scanf("%d", &codigo);
 			}
 			listaDependente =  excluirDependente(listaDependente, codigo);	
@@ -72,9 +72,9 @@ void menu(){
 			}	
 			break;
 		case 'C':
-			printf("\n1 – Listar todos os dados dos clientes cadastrados e exibir a media dos limites."
-					"\n2 – Listar todos os dados de um cliente por código."
-					"\n3 - Listar clientes por tipo de cartão."
+			printf("\n1 â€“ Listar todos os dados dos clientes cadastrados e exibir a media dos limites."
+					"\n2 â€“ Listar todos os dados de um cliente por cÃ³digo."
+					"\n3 - Listar clientes por tipo de cartÃ£o."
 					"\n4 - Finalizar."
 					"\nDigite sua opcao: ");
 			fflush(stdin);
@@ -92,7 +92,7 @@ void menu(){
 			}	
 			break;
 		default :
-			printf("\nOpção invalida.");
+			printf("\nOpÃ§Ã£o invalida.");
 			break;
 		}
 	}
@@ -140,7 +140,7 @@ char* cadastrarNascimentoCliente(){
 	
 	return dataDeAniversario;
 }
-
+//metodo que valida a data do ser humaninho
 bool ehValidaData(char *dataDeAniversario) {
 	int diaInt, mesInt, anoInt;
 	char data[10];
@@ -149,11 +149,11 @@ bool ehValidaData(char *dataDeAniversario) {
 	int i, tamanho;
 	tamanho = strlen(data);
 	if (tamanho != 10) {
-		printf("\nData inválida, digite 10 caracteres DD/MM/AAAA");
+		printf("\nData invÃ¡lida, digite 10 caracteres DD/MM/AAAA");
 		return false;
 	}
 	if (data[2] != '/' || data[5] != '/') {
-		printf("\nData inválida, digite / no 3o. e 6o. caracteres DD/MM/AAAA");
+		printf("\nData invÃ¡lida, digite / no 3o. e 6o. caracteres DD/MM/AAAA");
 		return false;
 	}
 	if(data[0]<'0' && data[0]>'9'){
@@ -195,25 +195,25 @@ bool ehValidaData(char *dataDeAniversario) {
 		anoInt = strtonum(ano);
 		
 		if (anoInt < 1919 || anoInt > 2001) {
-			printf("\nData inválida, você precisa ter 18 anos ou mais e com idade menor que 100 anos.");
+			printf("\nData invÃ¡lida, vocÃª precisa ter 18 anos ou mais e com idade menor que 100 anos.");
 			return false;
 		}
 		if (mesInt < 1 || mesInt > 12){
-			printf("\nData inválida, digite mes entre 1 e 12.");
+			printf("\nData invÃ¡lida, digite mes entre 1 e 12.");
 		}
 		if (diaInt < 1 || diaInt > 31) {
-			printf("\nData inválida, digite dia entre 1 e 31");
+			printf("\nData invÃ¡lida, digite dia entre 1 e 31");
 			return false;
 		}		
 		if (mesInt == 2 && diaInt >28){
-			printf("\nData inválida, para fevereiro, digite dia entre 1 e 28");
+			printf("\nData invÃ¡lida, para fevereiro, digite dia entre 1 e 28");
 			return false;			
 		} else if (mesInt == 2 && diaInt >29 && anoInt%4==0){
-			printf("\nData inválida, para fevereiro de ano bissexto, digite dia entre 1 e 29");
+			printf("\nData invÃ¡lida, para fevereiro de ano bissexto, digite dia entre 1 e 29");
 			return false;
 		}
 		if ((mesInt == 4 || mesInt == 6 || mesInt == 9 || mesInt == 11) && diaInt > 30) {
-			printf("\nData inválida, para meses 4,6,9 e 11, digite dia entre 1 e 30");
+			printf("\nData invÃ¡lida, para meses 4,6,9 e 11, digite dia entre 1 e 30");
 			return false;
 		}
 	}
@@ -335,7 +335,7 @@ cliente* excluirCliente(cliente* lista, char *codigo){
 		anterior = tmp;
 		tmp = tmp->proximo;
 	}
-	printf("\nCódigo não encontrado.");
+	printf("\nCÃ³digo nÃ£o encontrado.");
 	return lista;
 }
 
