@@ -268,11 +268,65 @@ int idadeStringToInteger(char *dataNascimento){
 }
 
 void cadastrarLimite(float *limite){
-	
+	char tipo = cadastrarTipo();	
+	int idade;
+	idade = idadeStringToInteger();
+
+	if(tipo = 'U'){
+		if(idade > 18 && idade < 40){
+			*limite = 10000;
+		}
+		else if(idade > 41 && idade < 60){
+			*limite = 15000;
+		}
+		else if(idade > 61 && idade < 75){
+			*limite = 5000;
+		}
+		else if(idade > 75){	
+			*limite = 2500;
+		}
+	}
+	else if(tipo = 'N'){
+		if(idade > 18 && idade < 40){
+			*limite = 10000 + (10000 * 0,05);
+		}
+		else if(idade > 41 && idade < 60){
+			*limite = 15000 + (15000 * 0,05);
+		}
+		else if(idade > 61 && idade < 75){
+			*limite = 5000 + (5000* 0.05);
+		}
+		else if(idade > 75){	
+			*limite = 2500 + (2500 * 0.05) ;
+		}
+	}
+	else if(tipo = 'I'){
+
+		if(idade > 18 && idade < 40){
+			*limite = 10000 + (10000 * 0,2);
+		}
+		else if(idade > 41 && idade < 60){
+			*limite = 15000 + (15000 * 0,2);
+		}
+		else if(idade > 61 && idade < 75){
+			*limite = 5000 + (5000* 0.2);
+		}
+		else if(idade > 75){	
+			*limite = 2500 + (2500 * 0.2) ;
+		}
+	}	
 }
 
 char cadastrarTipo(){
-	
+	char tipo;
+	printf("\nDigite qual o TIPO do cartao desejado: ");
+	printf("\nU - Universitario. ");
+	printf("\nN - Nacional. ");
+	printf("\nI - Internacional. ");
+	scanf("%c", &tipo);
+
+	return tipo;					
+
 }
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
