@@ -39,7 +39,7 @@ void menu(){
 			fflush(stdin);
 			scanf("%i", &opcao);
 			if (opcao == 1){
-				
+				listaCliente = inserirSimplismenteEncPeloFimCliente(listaCliente);
 			} else if (opcao == 2){
 				listaDependente = inserirDuplamenteEncPeloInicioDependente(listaDependente);
 			} else if (opcao == 3){
@@ -144,7 +144,7 @@ char* cadastrarNascimentoCliente(){
 bool ehValidaData(char *dataDeAniversario) {
 	int diaInt, mesInt, anoInt;
 	char data[10];
-	data = dataDeAniversario;
+	strcpy(data, dataDeAniversario);
 	char dia[1], mes[1], ano[3];
 	int i, tamanho;
 	tamanho = strlen(data);
@@ -223,7 +223,7 @@ bool ehValidaData(char *dataDeAniversario) {
 int idadeStringToInteger(char *dataNascimento){
 	int idade=0, anoInt;
 	char data[10];
-	data = dataNascimento;
+	strcpy(data, dataNascimento);
 	char ano[3];
 	
 	ano[0] = data[6];
@@ -245,12 +245,13 @@ char cadastrarTipo(){
 }
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
-	*novo = (cliente*) malloc (sizeof(cliente));
+	cliente *novo = (cliente*) malloc (sizeof(cliente));
 	novo->proximo = NULL;
-	//printf("\nDigite o nome do dependente: \n");
-	//gets(novo->nome);
-	//novo->nome = cadastrarNome(novo->nome);
-	novo->codigo = gerarCodigo();
+	do{
+		printf("\nDigite o nome do Cliente:\n");
+		cadastrarNome(gets(novo->nome));		
+	} while (true);
+	novo->codigo = gerarCodigoCliente(novo->nome);
 	
 
 	if (lista == NULL){
@@ -307,15 +308,15 @@ dependente* excluirDependente(dependente *lista, char *codigo){
 
 cliente* excluirCliente(cliente* lista, char *codigo){
 	cliente	*anterior = NULL,
-		  	*tmp = lista;
+			*tmp = lista;
 	int i=0;
 
 	while (tmp != NULL){
 		if (codigo == tmp->codigo) {
 			if (anterior == NULL){
 				lista = lista->proximo;
-				if (tmp.dependente>0){
-					for (i=0; i <= tmp.dependente; i++){
+				if (tmp->dependentes>0){
+					for (i=0; i <= tmp->dependentes; i++){
 						excluirDependente(dependente lista, codigo+i);					
 					}
 				}
@@ -323,8 +324,8 @@ cliente* excluirCliente(cliente* lista, char *codigo){
 				return lista;
 			} else {
 				anterior->proximo = tmp->proximo;
-				if (tmp.dependente>0){
-					for (i=0; i <= tmp.dependente; i++){
+				if (tmp->dependentes>0){
+					for (i=0; i <= tmp->dependentes; i++){
 						excluirDependente(dependente lista, codigo+i);					
 					}
 				}
@@ -339,16 +340,15 @@ cliente* excluirCliente(cliente* lista, char *codigo){
 	return lista;
 }
 
-char* gerarCodigoCliente(cliente *lista){
-	cliente *tmp = lista;
+char gerarCodigoCliente(char *nome){
 	char codigoCliente[100];
 	int i, tamanho, count = 0;
-	tamanho = strlen(tmp->nome);
-	codigoCliente[0]= tmp->nome[0];
+	tamanho = strlen(nome);
+	codigoCliente[0]= nome[0];
 	
-	for(i=tamanho; tmp->nome[i]!=tmp->nome[0]; i--){
-		if (tmp->nome[i] == ' '){
-			codigoCliente[1] = tmp->nome[i+1];
+	for(i=tamanho; nome[i]!=nome[0]; i--){
+		if (nome[i] == ' '){
+			codigoCliente[1] = nome[i+1];
 			break;
 		}
 	}
@@ -369,7 +369,7 @@ char* gerarCodigoCliente(cliente *lista){
 
 char* gerarCodigoDependente(char *codigoCliente){
 	char codigoDependente[100];
-	codigoDependente = codigoCliente;
+	strcpy(codigoDependente, codigoCliente);
 	int i, count = 0;
 	
 	for(i=0; codigoDependente[i]!='\0'; i++){

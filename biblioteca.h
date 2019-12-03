@@ -1,7 +1,7 @@
 #ifndef BIBLIOTECA_H_
 #define BIBLIOTECA_H_
 
-#define RANDOMICO rand()% (1000-0)
+#define RANDOMICO rand() % 1000
 #define MAX 2
 
 struct cliente {
