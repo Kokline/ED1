@@ -99,46 +99,77 @@ void menu(){
 }
 
 void cadastrarNome(char *nome){
-	int i, tamanho;
-	tamanho = strlen(nome);
-	
-	for (i=0; nome[i]!='\0'; i++){
-		if ((nome[i]>='a' && nome[i]<='z') || (nome[i]>='A' && nome[i]<='Z') || (nome[i] == ' ')){
-			printf("\nNome Valido!");
-		} else {
-			printf("\nNome nao Valido!");
-		}
-	}
-	
-	for (i=0; nome[i]!='\0'; i++){
-		if (nome[i] == ' ' && nome[i+1] == ' '){
-			nome[i] = nome[i+1];
-		}
-	}
-	
-	if (nome[0]>='a' && nome[0]<='z'){
-		nome[i]=nome[i]-32;
-	}	
+	fflush(stdin);
+	scanf("%s", nome);
+}
 
-	for(i=tamanho; nome[i]!=nome[0]; i--){
-		if (nome[i] == ' '){
-			if ((nome[i+1]>='A' && nome[i+1]<='Z')){
-				nome[i+1] = nome[i+1]+32;
+bool validaNome (char *nome){
+	int i, tamanho, count=0;
+	tamanho = strlen(nome);	
+	if (tamanho >50){
+		printf("\nDigite um nome e sobrenome com ate 50 caracteres.");
+		return false;
+	}
+	if (tamanho <3){
+		printf("\nDigite um nome e sobrenome com no minimo 3 caracteres no total.");
+		return false;
+ 	}
+	for (i=0; nome[i]!='\0'; i++){
+		if ((nome[i]>='a' && nome[i]<='z') & (nome[i]>='A' && nome[i]<='Z')){
+			count++;
+			if (count<=2){
+				printf("\nDigite um nome e sobrenome com no minimo 3 caracteres no total e pelo menos duas letras.");
+				return false;
 			} else {
 				break;
 			}
 		}
 	}
+	
+	for (i=0; nome[i]!='\0'; i++){
+		if ((nome[i]<'a' && nome[i]>'z') & (nome[i]<'A' && nome[i]>'Z') && (nome[i] != ' ')){
+			printf("\nNome precisa ter apenas latras!");
+			return false;
+		}
+	}
+	
+	do{
+		if (nome[0] == ' '){
+			for(i=0; nome[i]!='\0'; i++){
+				nome[i] = nome[i+1];
+			}
+		}
+		if (nome[tamanho] == ' '){
+			nome[tamanho] = nome[tamanho+1];
+			tamanho--;
+		}
+	}while (nome[0] == ' ' && nome[tamanho] == ' ');
+
+	if (nome[0]>='a' && nome[0]<='z'){
+		nome[i]=nome[i]-32;
+	}
+
+	for(i=tamanho; nome[i]!=nome[0]; i--){
+		if (nome[i] == ' '){
+			if ((nome[i+1]>='A' && nome[i+1]<='Z')){
+				nome[i+1] = nome[i+1]+32;
+				break;
+			} else {
+				break;
+			}
+		}
+	}
+	return true;
 }
 
 char* cadastrarNascimentoCliente(){
-	char dataDeAniversario[50];
+	char dataNascimento[10];
 	do{
 		printf("\nDigite a data de nascimento:\n");
-		gets(dataDeAniversario);
-	}while (ehValidaData(dataDeAniversario)!=true);
+		gets(dataNascimento);
+	}while (ehValidaData(dataNascimento)!=true);
 	
-	return dataDeAniversario;
+	return dataNascimento;
 }
 //metodo que valida a data do ser humaninho
 bool ehValidaData(char *dataDeAniversario) {
@@ -238,75 +269,32 @@ int idadeStringToInteger(char *dataNascimento){
 
 void cadastrarLimite(float *limite){
 	
-	char tipo = cadastrarTipo();	
-	//int idade =   
-	
-	if(tipo = 'U'){
-		if(idade > 18 && idade < 40){
-			*limite = 10000;
-		}
-		else if(idade > 41 && idade < 60){
-			*limite = 15000
-		}
-		else if(idade > 61 && idade < 75){
-			*limite = 5000;
-		}
-		else if(idade > 75){	
-			*limite = 2500;
-		}
-	}
-	else if(tipo = 'N'){
-		if(idade > 18 && idade < 40){
-			*limite = 10000 + (10000 * 0,05);
-		}
-		else if(idade > 41 && idade < 60){
-			*limite = 15000 + (15000 * 0,05);
-		}
-		else if(idade > 61 && idade < 75){
-			*limite = 5000 + (5000* 0.05);
-		}
-		else if(idade > 75){	
-			*limite = 2500 + (2500 * 0.05) ;
-		}
-	}
-	else if(tipo = 'I'){
-		
-		if(idade > 18 && idade < 40){
-			*limite = 10000 + (10000 * 0,2);
-		}
-		else if(idade > 41 && idade < 60){
-			*limite = 15000 + (15000 * 0,2);
-		}
-		else if(idade > 61 && idade < 75){
-			*limite = 5000 + (5000* 0.2);
-		}
-		else if(idade > 75){	
-			*limite = 2500 + (2500 * 0.2) ;
-		}
-	}	
 }
 
 char cadastrarTipo(){
-	char tipo;
-	printf("Digite qual o TIPO do cartao desejado: ")
-		+("U - Universitario")
-		+("N - Nacional")
-		+("I - Internacional");
-	scanf(tipo);
-	
-	return tipo;					
 	
 }
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
 	cliente *novo = (cliente*) malloc (sizeof(cliente));
+	char *codigo, *nascimento;
+	bool valida;
 	novo->proximo = NULL;
+
 	do{
 		printf("\nDigite o nome do Cliente:\n");
-		cadastrarNome(gets(novo->nome));		
-	} while (true);
-	novo->codigo = gerarCodigoCliente(novo->nome);
+		cadastrarNome(novo->nome);
+		valida = validaNome(novo->nome);
+	} while (valida!=true);
 	
+	gerarCodigoCliente(novo->nome);
+	
+	nascimento = cadastrarNascimento();
+	strcpy(novo->dataNascimento,nascimento);
+	
+	cadastrarTipo();
+	cadastrarLimite(novo);
+	cadastrarQtdeDependente(novo);	
 
 	if (lista == NULL){
 		return novo;
@@ -371,7 +359,7 @@ cliente* excluirCliente(cliente* lista, char *codigo){
 				lista = lista->proximo;
 				if (tmp->dependentes>0){
 					for (i=0; i <= tmp->dependentes; i++){
-						excluirDependente(dependente lista, codigo+i);					
+						excluirDependente(dependente *lista, codigo+i);					
 					}
 				}
 				free(tmp);
@@ -394,9 +382,16 @@ cliente* excluirCliente(cliente* lista, char *codigo){
 	return lista;
 }
 
+int tamanhoRand(int x) {
+    if (x >= 1000)       return 4;
+    if (x >= 100)        return 3;
+    if (x >= 10)         return 2;
+    return 1;
+}
+
 char gerarCodigoCliente(char *nome){
-	char codigoCliente[100];
-	int i, tamanho, count = 0;
+	char codigoCliente[100], randomico[3];
+	int i, tamanho, count = 0, SizeRand, Aram, j=0;
 	tamanho = strlen(nome);
 	codigoCliente[0]= nome[0];
 	
@@ -407,7 +402,32 @@ char gerarCodigoCliente(char *nome){
 		}
 	}
 	
-	codigoCliente[2]= RANDOMICO();
+	Aram = RANDOM;
+	SizeRand = tamanhoRand(Aram);
+	
+	itoa (Aram, randomico, 10);
+	
+	if(SizeRand == 1){
+		randomico[3] = randomico[0];
+		randomico[0] = '0';
+		randomico[1] = '0';
+		randomico[2] = '0';
+	} else if (SizeRand == 2){
+		randomico[2] = randomico[0];
+		randomico[3] = randomico[1];
+		randomico[0] = '0';
+		randomico[1] = '0';
+	} else if (SizeRand == 3){
+		randomico[1] = randomico[0];
+		randomico[2] = randomico[1];
+		randomico[3] = randomico[2];
+		randomico[0] = '0';
+	} else {
+		for (i=2; codigoCliente[i]<6; i++){
+			codigoCliente[i] = randomico[j];
+			j++;
+		}
+	}
 		
 	count++;
 	
@@ -417,7 +437,7 @@ char gerarCodigoCliente(char *nome){
 			break;
 		}
 	}
-	
+
 	return codigoCliente;
 }
 
