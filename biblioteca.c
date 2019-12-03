@@ -410,35 +410,30 @@ cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
 
 dependente* inserirDuplamenteEncPeloInicioDependente(dependente* lista){
 	dependente *novo = (dependente*) malloc (sizeof(dependente));
-
+	bool valida;
+	char *codigo, *nascimento;
 	novo->anterior = NULL;
 	novo->proximo = lista;
 
 	if (lista != NULL){
 		lista->anterior = novo;
 	}
+	
+	do{
+		printf("\nDigite o nome do Cliente:\n");
+		cadastrarNome(novo->nome);
+		valida = validaNome(novo->nome);
+	} while (valida!=true);
+
+	codigo = novo->codigo;
+	*codigo = gerarCodigoDependente(novo->nome);
+
+	nascimento = novo->dataNascimento;
+	*nascimento = cadastrarNascimento();
+	
+	cadastrarTipoDependente(novo->tipoDep);
 
 	return novo;
-}
-	
-void cadastrarQtdeDependente(cliente *cliente) {
-	int quantidadeDependentes, i;
-	dependente *listaDependentes = NULL;
-	do {
-		printf("Digite a quantidade de dependentes do cliente %s ",
-				cliente->nome);
-		fflush(stdin);
-		scanf("%d", &quantidadeDependentes);
-
-		if (quantidadeDependentes > 2) {
-			printf(" O limite de dependentes são 2, digite novamente...");
-		}
-	} while (quantidadeDependentes > 2);
-	cliente->quantidadeDependentes = quantidadeDependentes;
-
-	for (i = 0; i < quantidadeDependentes; i++) {
-		cliente->listaDependentes = inserirDuplamenteEncPeloInicioDependente(listaDependentes);
-	}
 }
 
 dependente* excluirDependente(dependente *lista, char *codigo){

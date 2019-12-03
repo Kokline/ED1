@@ -26,19 +26,23 @@ struct dependente{
 typedef struct cliente cliente;
 typedef struct dependente dependente;
 
+void menu();
 void cadastrarNome(char *nome);
-char* cadastrarNascimento();
+bool validaNome (char *nome);
+char* cadastrarNascimentoCliente();
+char* cadastrarNascimentoDependente();
+bool ehValidaData(char *dataDeAniversario, bool x);
+int idadeStringToInteger(char *dataNascimento);
 void cadastrarLimite(float *limite, int idade);
 char cadastrarTipo();
 void cadastrarTipoDependente(char *tipoDependente);
-char gerarCodigoCliente(char *nome);
-char* gerarCodigoDependente(char *codigoCliente);
-int idadeStringToInteger(char *dataNascimento);
-bool ehValidaData(char *dataDeAniversario, bool x);
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista);
-cliente* excluirCliente(cliente* lista, char *codigo);
 dependente* inserirDuplamenteEncPeloInicioDependente(dependente* lista);
 dependente* excluirDependente(dependente *lista, char *codigo);
+cliente* excluirCliente(cliente* lista, char *codigo);
+int tamanhoRand(int x);
+char gerarCodigoCliente(char *nome);
+char* gerarCodigoDependente(char *codigoCliente);
 
 #endif
