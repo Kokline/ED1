@@ -420,6 +420,26 @@ dependente* inserirDuplamenteEncPeloInicioDependente(dependente* lista){
 
 	return novo;
 }
+	
+void cadastrarQtdeDependente(cliente *cliente) {
+	int quantidadeDependentes, i;
+	dependente *listaDependentes = NULL;
+	do {
+		printf("Digite a quantidade de dependentes do cliente %s ",
+				cliente->nome);
+		fflush(stdin);
+		scanf("%d", &quantidadeDependentes);
+
+		if (quantidadeDependentes > 2) {
+			printf(" O limite de dependentes são 2, digite novamente...");
+		}
+	} while (quantidadeDependentes > 2);
+	cliente->quantidadeDependentes = quantidadeDependentes;
+
+	for (i = 0; i < quantidadeDependentes; i++) {
+		cliente->listaDependentes = inserirDuplamenteEncPeloInicioDependente(listaDependentes);
+	}
+}
 
 dependente* excluirDependente(dependente *lista, char *codigo){
 	dependente *tmp = lista;
