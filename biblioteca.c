@@ -166,7 +166,7 @@ char* cadastrarNascimentoCliente(){
 	char dataNascimento[10];
 	do{
 		printf("\nDigite a data de nascimento Cliente:\n");
-		gets(dataNascimento, 0);
+		gets(dataNascimento);
 	}while (ehValidaData(dataNascimento, 0)!=true);
 	
 	return dataNascimento;
@@ -176,7 +176,7 @@ char* cadastrarNascimentoDependente(){
 	char dataNascimento[10];
 	do{
 		printf("\nDigite a data de nascimento Dependente:\n");
-		gets(dataNascimento, 1);
+		gets(dataNascimento);
 	}while (ehValidaData(dataNascimento, 1)!=true);
 	
 	return dataNascimento;
@@ -351,13 +351,25 @@ void cadastrarLimite(float *limite, int idade){
 
 char cadastrarTipo(){
 	char tipo;
-	printf("\nDigite qual o TIPO do cartao desejado: ");
-	printf("\nU - Universitario. ");
-	printf("\nN - Nacional. ");
-	printf("\nI - Internacional. ");
-	scanf("%c", &tipo);
+	do{
+		printf("\nU - Universitario. ");
+		printf("\nN - Nacional. ");
+		printf("\nI - Internacional. ");
+		printf("\nDigite qual o TIPO do cartao desejado: ");
+		scanf("%c", &tipo);		
+	}while(tipo != 'U' || tipo != 'N' || tipo != 'I');
 
 	return tipo;					
+}
+
+void cadastrarTipoDependente(char *tipoDependente){
+	do{
+		printf("\nC - Conjuge. ");
+		printf("\nF - Filho. ");
+		printf("\nI - Enteado. ");
+		printf("\nDigite o tipo de dependente: \n");
+		scanf("%c", *tipoDependente);
+	} while(*tipoDependente != 'C' || *tipoDependente != 'F' || *tipoDependente != 'E');
 }
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
@@ -544,4 +556,5 @@ char* gerarCodigoDependente(char *codigoCliente){
 	count++;
 	
 	return codigoDependente;
+}
 }

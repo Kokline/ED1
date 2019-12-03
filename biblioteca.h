@@ -34,7 +34,7 @@ void cadastrarTipoDependente(char *tipoDependente);
 char gerarCodigoCliente(char *nome);
 char* gerarCodigoDependente(char *codigoCliente);
 int idadeStringToInteger(char *dataNascimento);
-bool ehValidaData(char *dataDeAniversario);
+bool ehValidaData(char *dataDeAniversario, bool x);
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista);
 cliente* excluirCliente(cliente* lista, char *codigo);
