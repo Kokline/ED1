@@ -165,14 +165,24 @@ bool validaNome (char *nome){
 char* cadastrarNascimentoCliente(){
 	char dataNascimento[10];
 	do{
-		printf("\nDigite a data de nascimento:\n");
-		gets(dataNascimento);
-	}while (ehValidaData(dataNascimento)!=true);
+		printf("\nDigite a data de nascimento Cliente:\n");
+		gets(dataNascimento, 0);
+	}while (ehValidaData(dataNascimento, 0)!=true);
 	
 	return dataNascimento;
 }
 
-bool ehValidaData(char *dataDeAniversario) {
+char* cadastrarNascimentoDependente(){
+	char dataNascimento[10];
+	do{
+		printf("\nDigite a data de nascimento Dependente:\n");
+		gets(dataNascimento, 1);
+	}while (ehValidaData(dataNascimento, 1)!=true);
+	
+	return dataNascimento;
+}
+
+bool ehValidaData(char *dataDeAniversario, bool x) {
 	int diaInt, mesInt, anoInt;
 	char data[10];
 	strcpy(data, dataDeAniversario);
@@ -225,8 +235,32 @@ bool ehValidaData(char *dataDeAniversario) {
 		mesInt = strtonum(mes);
 		anoInt = strtonum(ano);
 		
+	if (x == 0){
 		if (anoInt < 1919 || anoInt > 2001) {
 			printf("\nData inválida, você precisa ter 18 anos ou mais e com idade menor que 100 anos.");
+			return false;
+		}
+		if (mesInt < 1 || mesInt > 12){
+			printf("\nData inválida, digite mes entre 1 e 12.");
+		}
+		if (diaInt < 1 || diaInt > 31) {
+			printf("\nData inválida, digite dia entre 1 e 31");
+			return false;
+		}		
+		if (mesInt == 2 && diaInt >28){
+			printf("\nData inválida, para fevereiro, digite dia entre 1 e 28");
+			return false;			
+		} else if (mesInt == 2 && diaInt >29 && anoInt%4==0){
+			printf("\nData inválida, para fevereiro de ano bissexto, digite dia entre 1 e 29");
+			return false;
+		}
+		if ((mesInt == 4 || mesInt == 6 || mesInt == 9 || mesInt == 11) && diaInt > 30) {
+			printf("\nData inválida, para meses 4,6,9 e 11, digite dia entre 1 e 30");
+			return false;
+		}
+	} else {
+		if (anoInt < 1919 || anoInt > 2019) {
+			printf("\nData inválida, você precisa ter 0 anos ou mais e com idade menor que 100 anos.");
 			return false;
 		}
 		if (mesInt < 1 || mesInt > 12){
