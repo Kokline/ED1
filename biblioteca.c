@@ -149,7 +149,7 @@ bool validaNome (char *nome){
 		nome[i]=nome[i]-32;
 	}
 
-	for(i=tamanho; nome[i]!=nome[0]; i--){
+	for(i=tamanho; nome[tamanho]!=nome[0]; tamanho--){
 		if (nome[i] == ' '){
 			if ((nome[i+1]>='A' && nome[i+1]<='Z')){
 				nome[i+1] = nome[i+1]+32;
@@ -171,7 +171,7 @@ char* cadastrarNascimentoCliente(){
 	
 	return dataNascimento;
 }
-//metodo que valida a data do ser humaninho
+
 bool ehValidaData(char *dataDeAniversario) {
 	int diaInt, mesInt, anoInt;
 	char data[10];
@@ -267,10 +267,8 @@ int idadeStringToInteger(char *dataNascimento){
 	return idade;
 }
 
-void cadastrarLimite(float *limite){
-	char tipo = cadastrarTipo();	
-	int idade;
-	idade = idadeStringToInteger();
+void cadastrarLimite(float *limite, int idade){
+	char tipo = cadastrarTipo();
 
 	if(tipo = 'U'){
 		if(idade > 18 && idade < 40){
@@ -326,11 +324,12 @@ char cadastrarTipo(){
 	scanf("%c", &tipo);
 
 	return tipo;					
-
 }
 
 cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
 	cliente *novo = (cliente*) malloc (sizeof(cliente));
+	int idade;
+	float limit;
 	char *codigo, *nascimento;
 	bool valida;
 	novo->proximo = NULL;
@@ -340,14 +339,15 @@ cliente* inserirSimplismenteEncPeloFimCliente(cliente *lista){
 		cadastrarNome(novo->nome);
 		valida = validaNome(novo->nome);
 	} while (valida!=true);
+	codigo = novo->codigo;
+	*codigo = gerarCodigoCliente(novo->nome);
 	
-	gerarCodigoCliente(novo->nome);
+	nascimento = novo->dataNascimento;
+	*nascimento = cadastrarNascimento();
 	
-	nascimento = cadastrarNascimento();
-	strcpy(novo->dataNascimento,nascimento);
-	
-	cadastrarTipo();
-	cadastrarLimite(novo);
+	idade = idadeStringToInteger(novo->dataNascimento);
+	cadastrarLimite(, idade);
+		
 	cadastrarQtdeDependente(novo);	
 
 	if (lista == NULL){
@@ -498,7 +498,7 @@ char gerarCodigoCliente(char *nome){
 char* gerarCodigoDependente(char *codigoCliente){
 	char codigoDependente[100];
 	strcpy(codigoDependente, codigoCliente);
-	int i, count = 0;
+	int i, count = 1;
 	
 	for(i=0; codigoDependente[i]!='\0'; i++){
 		if (codigoDependente[i+1] == '\0'){

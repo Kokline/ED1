@@ -28,7 +28,7 @@ typedef struct dependente dependente;
 
 void cadastrarNome(char *nome);
 char* cadastrarNascimento();
-void cadastrarLimite(float *limite);
+void cadastrarLimite(float *limite, int idade);
 char cadastrarTipo();
 void cadastrarTipoDependente(char *tipoDependente);
 char gerarCodigoCliente(char *nome);
