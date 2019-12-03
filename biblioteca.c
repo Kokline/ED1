@@ -283,8 +283,18 @@ void cadastrarLimite(float *limite){
 		else if(idade > 75){	
 			*limite = 2500 + (2500 * 0.2) ;
 		}
-	}
+	}	
+}
+
+char cadastrarTipo(){
+	char tipo;
+	printf("Digite qual o TIPO do cartao desejado: ")
+		+("U - Universitario")
+		+("N - Nacional")
+		+("I - Internacional");
+	scanf(tipo);
 	
+	return tipo;					
 	
 }
 
